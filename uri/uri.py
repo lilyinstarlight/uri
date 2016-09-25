@@ -23,7 +23,7 @@ def get(alias):
         raise KeyError()
 
     # get data
-    redirect = {'location': response.read()}
+    redirect = {'location': response.read().decode('utf-8')}
 
     return redirect
 
@@ -66,7 +66,7 @@ def put(alias, location):
         raise KeyError()
 
     # make a data request
-    conn.request('PUT', config.store_endpoint + 'store/uri/' + data['alias'], body=location)
+    conn.request('PUT', config.store_endpoint + 'store/uri/' + data['alias'], body=location.encode('utf-8'))
 
     # get response
     response = conn.getresponse()
