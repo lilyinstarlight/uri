@@ -13,5 +13,5 @@ store = 'store.fooster.io'
 store_https = True
 store_endpoint = '/'
 
-# interval for storing files
+# interval for storing redirections
 interval = 604800  # 1 week
