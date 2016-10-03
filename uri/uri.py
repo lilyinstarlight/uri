@@ -63,7 +63,7 @@ def put(alias, location):
 
     # note bad requests
     if response.status != 201:
-        raise KeyError()
+        raise NameError()
 
     # make a data request
     conn.request('PUT', config.store_endpoint + 'store/uri/' + data['alias'], body=location.encode('utf-8'))
@@ -74,6 +74,6 @@ def put(alias, location):
 
     # note bad requests
     if response.status != 204:
-        raise KeyError()
+        raise ValueError()
 
     return data['alias']
