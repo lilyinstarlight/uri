@@ -5,6 +5,10 @@ addr = ('', 8080)
 log = '/var/log/uri/uri.log'
 httplog = '/var/log/uri/http.log'
 
+# template directory to use
+import os.path
+template = os.path.dirname(__file__) + '/html'
+
 # where service is located
 service = 'https://uri.fooster.io'
 
