@@ -2,20 +2,12 @@ import html
 import time
 import urllib.parse
 
-import web, web.form, web.page
+import fooster.web, fooster.web.form, fooster.web.page
 
-from uri import config, log, uri
-
-
-alias = '([a-zA-Z0-9._-]+)'
-
-http = None
-
-routes = {}
-error_routes = {}
+from uri import config, uri
 
 
-class Interface(web.page.PageHandler, web.form.FormHandler):
+class Interface(fooster.web.page.PageHandler, fooster.web.form.FormHandler):
     directory = config.template
     page = 'index.html'
     message = ''
@@ -28,7 +20,7 @@ class Interface(web.page.PageHandler, web.form.FormHandler):
             alias = self.request.body['alias']
             location = self.request.body['uri']
         except (KeyError, TypeError):
-            raise web.HTTPError(400)
+            raise fooster.web.HTTPError(400)
 
         try:
             alias = uri.put(alias, location)
@@ -44,19 +36,19 @@ class Interface(web.page.PageHandler, web.form.FormHandler):
         return self.do_get()
 
 
-class ErrorInterface(web.page.PageErrorHandler):
+class ErrorInterface(fooster.web.page.PageErrorHandler):
     directory = config.template
     page = 'error.html'
 
 
-class Redirect(web.HTTPHandler):
+class Redirect(fooster.web.HTTPHandler):
     def do_get(self):
         alias = self.groups[0]
 
         try:
             redirect = uri.get(alias)
         except KeyError:
-            raise web.HTTPError(404)
+            raise fooster.web.HTTPError(404)
 
         # set headers
         self.response.headers['Location'] = redirect['location']
@@ -65,14 +57,22 @@ class Redirect(web.HTTPHandler):
         return 307, ''
 
 
+alias = '([a-zA-Z0-9._-]+)'
+
+http = None
+
+routes = {}
+error_routes = {}
+
+
 routes.update({'/': Interface, '/' + alias: Redirect})
-error_routes.update(web.page.new_error(handler=ErrorInterface))
+error_routes.update(fooster.web.page.new_error(handler=ErrorInterface))
 
 
 def start():
     global http
 
-    http = web.HTTPServer(config.addr, routes, error_routes, log=log.httplog)
+    http = fooster.web.HTTPServer(config.addr, routes, error_routes, timeout=60, keepalive=60)
     http.start()
 
 
@@ -81,3 +81,9 @@ def stop():
 
     http.stop()
     http = None
+
+
+def join():
+    global http
+
+    http.join()

@@ -1,9 +1,9 @@
 # address to listen on
-addr = ('', 8080)
+addr = ('', 8081)
 
 # log locations
 log = '/var/log/uri/uri.log'
-httplog = '/var/log/uri/http.log'
+http_log = '/var/log/uri/http.log'
 
 # template directory to use
 import os.path
@@ -13,8 +13,11 @@ template = os.path.dirname(__file__) + '/html'
 service = 'https://uri.fooster.io'
 
 # where store is located
-store = 'store.fooster.io'
-store_https = True
+#store = 'store.fooster.io'
+#store_https = True
+#store_endpoint = '/'
+store = 'localhost:8080'
+store_https = False
 store_endpoint = '/'
 
 # interval for storing redirections
