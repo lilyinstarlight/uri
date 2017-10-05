@@ -13,11 +13,8 @@ template = os.path.dirname(__file__) + '/html'
 service = 'https://uri.fooster.io'
 
 # where store is located
-#store = 'store.fooster.io'
-#store_https = True
-#store_endpoint = '/'
-store = 'localhost:8080'
-store_https = False
+store = 'store.fooster.io'
+store_https = True
 store_endpoint = '/'
 
 # interval for storing redirections
