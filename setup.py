@@ -41,5 +41,5 @@ setup(
     install_requires=['fooster-web'],
     packages=find_packages(),
     package_data={'': ['html/*.*', 'res/*.*']},
-    entry_points = {'console_scripts': ['uri = uri.main']},
+    entry_points = {'console_scripts': ['uri = uri.__main__:main']},
 )

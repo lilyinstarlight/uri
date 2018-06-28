@@ -43,7 +43,7 @@ class ErrorInterface(fooster.web.page.PageErrorHandler):
 
 class Redirect(fooster.web.HTTPHandler):
     def do_get(self):
-        alias = self.groups[0]
+        alias = self.groups['alias']
 
         try:
             redirect = uri.get(alias)
@@ -57,7 +57,7 @@ class Redirect(fooster.web.HTTPHandler):
         return 307, ''
 
 
-alias = '([a-zA-Z0-9._-]+)'
+alias = '(?P<alias>[a-zA-Z0-9._-]+)'
 
 http = None
 
