@@ -24,6 +24,9 @@ class Interface(fooster.web.page.PageHandler, fooster.web.form.FormHandler):
         except (KeyError, TypeError):
             raise fooster.web.HTTPError(400)
 
+        if alias == '.' or alias == '..':
+            raise fooster.web.HTTPError(400)
+
         try:
             alias = uri.put(alias, location)
 
@@ -46,6 +49,9 @@ class ErrorInterface(fooster.web.page.PageErrorHandler):
 class Redirect(fooster.web.HTTPHandler):
     def do_get(self):
         alias = self.groups['alias']
+
+        if alias == '.' or alias == '..':
+            raise fooster.web.HTTPError(400)
 
         try:
             redirect = uri.get(alias)
