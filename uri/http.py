@@ -1,9 +1,10 @@
 import html
 import re
-import time
 import urllib.parse
 
-import fooster.web, fooster.web.form, fooster.web.page
+import fooster.web
+import fooster.web.form
+import fooster.web.page
 
 from uri import config, uri
 
