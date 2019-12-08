@@ -1,10 +1,19 @@
 import html
+import re
 import time
 import urllib.parse
 
 import fooster.web, fooster.web.form, fooster.web.page
 
 from uri import config, uri
+
+
+alias_regex = '(?P<alias>[a-zA-Z0-9._-]+)'
+
+http = None
+
+routes = {}
+error_routes = {}
 
 
 class Interface(fooster.web.page.PageHandler, fooster.web.form.FormHandler):
@@ -28,9 +37,12 @@ class Interface(fooster.web.page.PageHandler, fooster.web.form.FormHandler):
             raise fooster.web.HTTPError(400)
 
         try:
+            if not re.fullmatch(alias_regex, alias):
+                raise NameError('alias ' + repr(alias) + ' invalid')
+
             alias = uri.put(alias, location)
 
-            self.message = 'Successfully created at <a href="' + config.service + '/' + urllib.parse.quote(alias) + '">' + config.service + '/' + html.escape(alias) + '</a>.'
+            self.message = 'Successfully created at <a href="' + config.service.rstrip('/') + '/' + urllib.parse.quote(alias) + '">' + config.service.rstrip('/') + '/' + html.escape(alias) + '</a>.'
         except KeyError:
             self.message = 'This alias already exists. Wait until it expires or choose another.'
         except NameError:
@@ -65,15 +77,7 @@ class Redirect(fooster.web.HTTPHandler):
         return 307, ''
 
 
-alias = '(?P<alias>[a-zA-Z0-9._-]+)'
-
-http = None
-
-routes = {}
-error_routes = {}
-
-
-routes.update({'/': Interface, '/' + alias: Redirect})
+routes.update({'/': Interface, '/' + alias_regex: Redirect})
 error_routes.update(fooster.web.page.new_error(handler=ErrorInterface))
 
 
