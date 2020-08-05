@@ -10,10 +10,10 @@ import os.path
 template = os.path.dirname(__file__) + '/html'
 
 # where service is located
-service = 'https://uri.fooster.io/'
+service = 'https://uri.lily.flowers'
 
 # where store is located
-store = 'https://store.fooster.io/'
+store = 'https://store.lily.flowers'
 
 # interval for storing redirections
 interval = 604800  # 1 week
