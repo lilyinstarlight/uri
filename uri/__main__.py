@@ -1,9 +1,6 @@
 import argparse
 import logging
 import signal
-import sys
-
-import fooster.web
 
 from uri import config
 
