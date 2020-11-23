@@ -1,2 +1,1 @@
-name = 'uri'
-version = '0.1b4'
+__version__ = '0.1.0'
