@@ -73,8 +73,6 @@ def create(uri, alias=None):
 
 
 if __name__ == '__main__':
-    import sys
-
     from argparse import ArgumentParser
 
     parser = ArgumentParser(description='create temporary redirects using the service at {}'.format(service))
